@@ -8,7 +8,10 @@ export default function Products() {
                 <li key={num}>
                     {" "}
                     <Link
-                        href={`/products/${num}`}
+                        href={{
+                            pathname: `/products/productDetails`,
+                            query: { productId: num },
+                        }}
                         data-testid={`Product Link ${num}`}
                     >
                         {" "}
