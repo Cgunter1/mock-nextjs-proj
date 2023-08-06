@@ -13,10 +13,9 @@ describe("Home", () => {
     it("renders a heading", () => {
         render(<Home />);
 
-        const heading = screen.getByRole("heading", {
-            name: /welcome to next\.js!/i,
-        });
+        const heading = screen.getByTestId("HomeTitle");
 
         expect(heading).toBeInTheDocument();
+        expect(heading.textContent).toMatch(/^Get started by editing!!!.*$/);
     });
 });
