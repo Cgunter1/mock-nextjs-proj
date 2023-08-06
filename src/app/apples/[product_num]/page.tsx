@@ -5,5 +5,5 @@ interface ProductProps {
 }
 
 export default function Products({ params: { product_num } }: ProductProps) {
-    return <h1>Patient Details of {product_num}</h1>;
+    return <h1>APPLES</h1>;
 }
