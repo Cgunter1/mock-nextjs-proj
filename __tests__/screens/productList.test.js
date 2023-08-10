@@ -24,6 +24,8 @@ describe("Product List", () => {
         fireEvent.click(productLink);
 
         // Ensure the router was updated:
-        expect(mockRouter.asPath).toEqual("/products/1");
+        expect(mockRouter.asPath).toEqual(
+            "/products/productDetails?productId=1"
+        );
     });
 });
