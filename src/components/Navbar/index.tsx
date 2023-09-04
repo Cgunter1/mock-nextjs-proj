@@ -22,7 +22,9 @@ const NavBar: FunctionComponent<PropsWithChildren> = ({ children }) => {
                             color="white"
                             rounded="100%"
                         />
-                        <Heading>Lost &amp; found Items</Heading>
+                        <Heading data-testid="title">
+                            Lost &amp; found Items
+                        </Heading>
                     </Flex>
 
                     <Button bgColor="blue.400" p={3} rounded={10}>
