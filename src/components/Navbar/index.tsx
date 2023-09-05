@@ -1,8 +1,9 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text, useTheme } from "@chakra-ui/react";
 import { FunctionComponent, PropsWithChildren } from "react";
 
 const NavBar: FunctionComponent<PropsWithChildren> = ({ children }) => {
+    const theme = useTheme();
     return (
         <Box>
             <Box boxShadow="md" py={4}>
@@ -22,12 +23,15 @@ const NavBar: FunctionComponent<PropsWithChildren> = ({ children }) => {
                             color="white"
                             rounded="100%"
                         />
-                        <Heading data-testid="title">
+                        <Heading data-testid="title" color="midnightBlue.500">
                             Lost &amp; found Items
                         </Heading>
                     </Flex>
 
-                    <Button bgColor="blue.400" p={3} rounded={10}>
+                    <Button
+                        bgColor={theme.lightBlue}
+                        variant="sm-rounded-desktop"
+                    >
                         <Text color="white">Login</Text>
                     </Button>
                 </Flex>
