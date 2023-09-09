@@ -33,7 +33,6 @@ const LoginCard: FunctionComponent<LoginCardProps> = ({ onLogin }) => {
 
     useEffect(() => {
         const keyUpEvent = (e: KeyboardEvent) => {
-            console.log(username, password);
             if (e.key === "Enter" && validate(username) && validate(password)) {
                 onLogin(username, password);
             }
@@ -44,8 +43,6 @@ const LoginCard: FunctionComponent<LoginCardProps> = ({ onLogin }) => {
             document.removeEventListener("keyup", keyUpEvent);
         };
     }, [onLogin, username, password]);
-
-    const isDisabled = !(validate(username) && validate(password));
 
     return (
         <Box
@@ -95,16 +92,9 @@ const LoginCard: FunctionComponent<LoginCardProps> = ({ onLogin }) => {
                         />
                     </Box>
                     <Button
-                        disabled={isDisabled}
                         width="100%"
-                        variant={
-                            isDisabled ? "disabled" : "light-square-desktop"
-                        }
-                        onClick={() =>
-                            validate(username) &&
-                            validate(password) &&
-                            onLogin(username, password)
-                        }
+                        variant="light-square-desktop"
+                        onClick={() => onLogin(username, password)}
                     >
                         Login
                     </Button>
