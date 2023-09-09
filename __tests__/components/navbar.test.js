@@ -22,7 +22,7 @@ describe("Navbar", () => {
     it("renders children inside of navbar", () => {
         render(
             <Navbar>
-                <p data-testId="sample_text">Hello</p>
+                <p data-testid="sample_text">Hello</p>
             </Navbar>
         );
 
