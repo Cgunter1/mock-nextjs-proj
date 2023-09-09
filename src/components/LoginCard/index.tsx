@@ -2,40 +2,29 @@ import { Flex, Heading, Input, Button, Box, Text } from "@chakra-ui/react";
 import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
 
 interface LoginCardProps {
-    onLogin: (email: string, password: string, org: string) => void;
-    onSignUp: () => void;
-    onForgotPassword: () => void;
+    onLogin: (username: string, password: string) => void;
 }
 
 enum InputType {
-    EMAIL,
+    USERNAME,
     PASSWORD,
-    ORG,
 }
 
 // Use Yup or some validator.
 const validate = (s: string): boolean => s.length > 0;
 
-const LoginCard: FunctionComponent<LoginCardProps> = ({
-    onLogin,
-    onSignUp,
-    onForgotPassword,
-}) => {
-    const [email, setEmail] = useState("");
+const LoginCard: FunctionComponent<LoginCardProps> = ({ onLogin }) => {
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [org, setOrg] = useState("");
 
     const setVariable = (e: ChangeEvent<HTMLInputElement>, type: InputType) => {
         const newValue = e.target.value;
         switch (type) {
-            case InputType.EMAIL:
-                setEmail(newValue);
+            case InputType.USERNAME:
+                setUsername(newValue);
                 break;
             case InputType.PASSWORD:
                 setPassword(newValue);
-                break;
-            case InputType.ORG:
-                setOrg(newValue);
                 break;
             default:
                 throw Error("Not username or password");
@@ -44,13 +33,9 @@ const LoginCard: FunctionComponent<LoginCardProps> = ({
 
     useEffect(() => {
         const keyUpEvent = (e: KeyboardEvent) => {
-            if (
-                e.key === "Enter" &&
-                validate(email) &&
-                validate(password) &&
-                validate(org)
-            ) {
-                onLogin(email, password, org);
+            console.log(username, password);
+            if (e.key === "Enter" && validate(username) && validate(password)) {
+                onLogin(username, password);
             }
         };
         document.addEventListener("keyup", keyUpEvent);
@@ -58,25 +43,21 @@ const LoginCard: FunctionComponent<LoginCardProps> = ({
         return () => {
             document.removeEventListener("keyup", keyUpEvent);
         };
-    }, [onLogin, email, password, org]);
+    }, [onLogin, username, password]);
 
-    const isDisabled = !(
-        validate(email) &&
-        validate(password) &&
-        validate(org)
-    );
+    const isDisabled = !(validate(username) && validate(password));
 
     return (
         <Box
             boxShadow="lg"
-            p={12}
+            p={20}
             border="2px"
             borderColor="lightBlue"
             rounded={10}
         >
             <Flex flexDir="column" alignItems="center">
                 <Heading color="midnightBlue.500">Login</Heading>
-                <Box my={2} minW={500}>
+                <Box my={8} minW={700}>
                     <Box my={4}>
                         <Text
                             mb={2}
@@ -84,15 +65,14 @@ const LoginCard: FunctionComponent<LoginCardProps> = ({
                             fontSize="xl"
                             color="midnightBlue.500"
                         >
-                            Email
+                            Username
                         </Text>
                         <Input
-                            value={email}
-                            onChange={e => setVariable(e, InputType.EMAIL)}
+                            value={username}
+                            onChange={e => setVariable(e, InputType.USERNAME)}
                             borderColor="lightBlue"
                             width="100%"
                             size="lg"
-                            data-testid="emailInput"
                         />
                     </Box>
                     <Box my={8}>
@@ -112,64 +92,26 @@ const LoginCard: FunctionComponent<LoginCardProps> = ({
                             borderColor="lightBlue"
                             width="100%"
                             size="lg"
-                            data-testid="passwordInput"
-                        />
-                    </Box>
-                    <Box my={8}>
-                        <Text
-                            fontFamily="Outfit"
-                            fontWeight="400"
-                            mb={2}
-                            fontSize="xl"
-                            color="midnightBlue.500"
-                        >
-                            Organization
-                        </Text>
-                        <Input
-                            value={org}
-                            onChange={e => setVariable(e, InputType.ORG)}
-                            borderColor="lightBlue"
-                            width="100%"
-                            size="lg"
-                            data-testid="orgInput"
                         />
                     </Box>
                     <Button
                         disabled={isDisabled}
                         width="100%"
-                        data-testid="loginButton"
                         variant={
                             isDisabled ? "disabled" : "light-square-desktop"
                         }
                         onClick={() =>
-                            validate(email) &&
+                            validate(username) &&
                             validate(password) &&
-                            validate(org) &&
-                            onLogin(email, password, org)
+                            onLogin(username, password)
                         }
                     >
                         Login
                     </Button>
                 </Box>
-                <Text
-                    variant="link"
-                    fontSize="lg"
-                    data-testid="forgotPasswordLink"
-                    onClick={onForgotPassword}
-                >
+                <Text variant="link" fontSize="lg">
                     Forgot Password?
                 </Text>
-                <Text fontSize="lg" mt={4} mb={2}>
-                    Don&apos;t have an account?
-                </Text>
-                <Button
-                    data-testid="signUpButton"
-                    width="40%"
-                    variant="light-square-desktop"
-                    onClick={onSignUp}
-                >
-                    Sign Up
-                </Button>
             </Flex>
         </Box>
     );
