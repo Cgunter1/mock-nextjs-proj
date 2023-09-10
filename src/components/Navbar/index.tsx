@@ -1,9 +1,13 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex, Heading, Text, useTheme } from "@chakra-ui/react";
 import { FunctionComponent, PropsWithChildren } from "react";
+import { useUserContext } from "../../hooks/useUser";
 
 const NavBar: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const theme = useTheme();
+    const { user } = useUserContext();
+
+    const isUserSignedIn = Object.keys(user).length > 0;
     return (
         <Box>
             <Box boxShadow="md" py={4}>
@@ -28,12 +32,16 @@ const NavBar: FunctionComponent<PropsWithChildren> = ({ children }) => {
                         </Heading>
                     </Flex>
 
-                    <Button
-                        bgColor={theme.lightBlue}
-                        variant="sm-rounded-desktop"
-                    >
-                        <Text color="white">Login</Text>
-                    </Button>
+                    {isUserSignedIn ? (
+                        <Text color="midnightBlue.500">{user.username}</Text>
+                    ) : (
+                        <Button
+                            bgColor={theme.lightBlue}
+                            variant="sm-rounded-desktop"
+                        >
+                            <Text color="white">Login</Text>
+                        </Button>
+                    )}
                 </Flex>
             </Box>
             {children}
