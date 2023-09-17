@@ -37,8 +37,11 @@ export default function Home() {
     };
 
     useEffect(() => {
-        console.log(user);
-    }, [user]);
+        if (Object.keys(user).length > 0) {
+            router.push("dashboards/user");
+        }
+    }, [user, router]);
+
     return (
         <>
             <main>
