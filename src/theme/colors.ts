@@ -1,5 +1,6 @@
 const colorStyling = {
     lightBlue: {
+        200: "#def5fc",
         500: "#20bff0",
         700: "#053c4c",
     },

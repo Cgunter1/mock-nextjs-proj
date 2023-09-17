@@ -12,13 +12,20 @@ import {
     Text,
 } from "@chakra-ui/react";
 import LoginCard from "../components/LoginCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUserContext, USER_STATES } from "../hooks/useUser";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+    const { user, userDispatch } = useUserContext();
+    const router = useRouter();
+
     const onLogin = (username: string, password: string, org: string) => {
-        alert(`username: ${username}, password: ${password}, org: ${org}`);
+        // TODO: Integrate in a more believable way.
+        userDispatch({ user: { username }, type: USER_STATES.SIGN_IN });
+        router.push("dashboards/user");
     };
 
     const onSignUp = () => {
@@ -28,10 +35,17 @@ export default function Home() {
     const onForgotPassword = () => {
         alert("Go to forgot password page");
     };
+
+    useEffect(() => {
+        if (Object.keys(user).length > 0) {
+            router.push("dashboards/user");
+        }
+    }, [user, router]);
+
     return (
         <>
             <main>
-                <Flex justifyContent="center" alignItems="center" height="90vh">
+                <Flex justifyContent="center" alignItems="center" mt={8}>
                     <LoginCard
                         onLogin={onLogin}
                         onSignUp={onSignUp}
